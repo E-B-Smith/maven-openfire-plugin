@@ -1,6 +1,7 @@
 //========================================================================
 //$Id$
 //Copyright 2006 Mort Bay Consulting Pty. Ltd.
+//Copyright 2012 jmgoncalves
 //------------------------------------------------------------------------
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -15,15 +16,16 @@
 
 package com.reucon.maven.plugin.openfire.jspc;
 
+import org.apache.jasper.JasperException;
 import org.apache.jasper.JspC;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.mortbay.jetty.webapp.WebAppClassLoader;
-import org.mortbay.jetty.webapp.WebAppContext;
-import org.mortbay.util.IO;
+import org.eclipse.jetty.webapp.WebAppClassLoader;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.util.IO;
 
 import java.io.*;
 import java.net.URL;
@@ -199,6 +201,8 @@ public class JspcMojo extends AbstractMojo
         }
         catch (Exception e)
         {
+        	System.out.println("MojoFailureException processing jsps!!!! stack trace follows...");
+        	e.printStackTrace();
             throw new MojoFailureException(e, "Failure processing jsps", "Failure processing jsps");
         }
     }
@@ -246,28 +250,6 @@ public class JspcMojo extends AbstractMojo
         jspc.setSmapDumped(!suppressSmap);
         jspc.setJavaEncoding(javaEncoding);
 
-        //Glassfish jspc only checks
-
-        try
-        {
-            jspc.setIgnoreJspFragmentErrors(ignoreJspFragmentErrors);
-        }
-        catch (NoSuchMethodError e)
-        {
-            getLog().debug("Tomcat Jasper does not support configuration option 'ignoreJspFragmentErrors': ignored");
-        }
-
-        try
-        {
-            if (schemaResourcePrefix != null)
-            {
-                jspc.setSchemaResourcePrefix(schemaResourcePrefix);
-            }
-        }
-        catch (NoSuchMethodError e)
-        {
-            getLog().debug("Tomcat Jasper does not support configuration option 'schemaResourcePrefix': ignored");
-        }
         if (verbose)
         {
             jspc.setVerbose(99);

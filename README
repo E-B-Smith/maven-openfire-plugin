@@ -1,0 +1,9 @@
+This is a fork form the source @ https://github.com/srt/maven-openfire-plugin
+The 1.0.1 version is documented @ http://maven.reucon.com/projects/public/maven-openfire-plugin/1.0.1/
+All this work has been done by Stefan Reuter (https://blogs.reucon.com/srt/), drawing partly from Mort Consulting work.
+
+Due to apparently being unsupported, and to the Jetty package refactoring in Openfire (org.mortbay.jetty changed to org.eclipse.jetty), I did some small changes to the plugin. It's not good but it works with Openfire 3.7.0. Remind to locally install the Openfire jars with the following commands (replacing OPENFIRE_DIR with the actual directory):
+mvn install:install-file -DgroupId=org.igniterealtime.openfire -DartifactId=openfire -Dversion=3.7.0 -Dpackaging=jar -DgeneratePom=true -Dfile=OPENFIRE_DIR/lib/openfire.jar
+mvn install:install-file -DgroupId=org.igniterealtime.openfire -DartifactId=jasper-compiler -Dversion=3.7.0 -Dpackaging=jar -DgeneratePom=true -Dfile= OPENFIRE_DIR/lib/jasper-compiler.jar
+mvn install:install-file -DgroupId=org.igniterealtime.openfire -DartifactId=jasper-runtime -Dversion=3.7.0 -Dpackaging=jar -DgeneratePom=true -Dfile= OPENFIRE_DIR/lib/jasper-runtime.jar
+mvn install:install-file -DgroupId=org.igniterealtime.openfire -DartifactId=servlet -Dversion=3.7.0 -Dpackaging=jar -DgeneratePom=true -Dfile= OPENFIRE_DIR/lib/servlet.jar
