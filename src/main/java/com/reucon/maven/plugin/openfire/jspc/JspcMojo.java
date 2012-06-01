@@ -16,22 +16,24 @@
 
 package com.reucon.maven.plugin.openfire.jspc;
 
-import org.apache.jasper.JasperException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.util.Iterator;
+
 import org.apache.jasper.JspC;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.util.IO;
-
-import java.io.*;
-import java.net.URL;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * This goal will compile jsps for an Openfire Plugin so that they can be included in the jar.
@@ -238,6 +240,11 @@ public class JspcMojo extends AbstractMojo
         Thread.currentThread().setContextClassLoader(webAppClassLoader);
 
         JspC jspc = new JspC();
+        
+        // jmgoncalves
+        jspc.setCompilerSourceVM("1.5"); 
+        jspc.setCompilerTargetVM("1.5");
+        
         jspc.setWebXmlFragment(webXmlFragment);
         jspc.setUriroot(webAppSourceDirectory);
 

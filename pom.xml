@@ -10,6 +10,10 @@
         resources of an Openfire plugin and packaging them into a jar suitable for deployment to an Openfire
         XMPP server.
     </description>
+    
+    <properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	</properties>
 
     <build>
         <plugins>
