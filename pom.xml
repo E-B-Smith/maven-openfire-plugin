@@ -2,30 +2,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.reucon.maven.plugins</groupId>
-    <artifactId>maven-openfire-plugin</artifactId>
-    <version>1.0.3</version>
+    <artifactId>openfire-maven-plugin</artifactId>
+    <version>1.0.4</version>
     <packaging>maven-plugin</packaging>
     <name>Maven Openfire Plugin</name>
     <description>The Maven Openfire Plugin is responsible for collecting all artifact dependencies, classes and
         resources of an Openfire plugin and packaging them into a jar suitable for deployment to an Openfire
         XMPP server.
     </description>
-    
+
     <properties>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  	</properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <openfireVersion>3.9.3</openfireVersion>
+    </properties>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <compilerArgument>-Xlint:deprecation</compilerArgument>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -86,38 +90,33 @@
         </dependency>
         <dependency>
             <groupId>org.igniterealtime.openfire</groupId>
-		    <artifactId>openfire</artifactId>
-		    <version>3.7.0</version>
+            <artifactId>openfire</artifactId>
+            <version>${openfireVersion}</version>
         </dependency>
         <dependency>
-            <groupId>org.igniterealtime.openfire</groupId>
-		    <artifactId>jasper-compiler</artifactId>
-		    <version>3.7.0</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>9.2.7.v20150116</version>
         </dependency>
         <dependency>
-            <groupId>org.igniterealtime.openfire</groupId>
-		    <artifactId>jasper-runtime</artifactId>
-		    <version>3.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.igniterealtime.openfire</groupId>
-		    <artifactId>servlet</artifactId>
-		    <version>3.7.0</version>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jsp-2.1</artifactId>
+            <version>6.1.14</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.8.0</version>
+            <artifactId>ant</artifactId>
+            <version>1.8.0</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
         </dependency>
         <dependency>
             <groupId>commons-el</groupId>
-			<artifactId>commons-el</artifactId>
-			<version>1.0</version>
+            <artifactId>commons-el</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

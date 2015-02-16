@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//You may obtain a copy of the License at 
+//You may obtain a copy of the License at
 //http://www.apache.org/licenses/LICENSE-2.0
 //Unless required by applicable law or agreed to in writing, software
 //distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 
 import org.apache.jasper.JspC;
@@ -240,11 +241,11 @@ public class JspcMojo extends AbstractMojo
         Thread.currentThread().setContextClassLoader(webAppClassLoader);
 
         JspC jspc = new JspC();
-        
+
         // jmgoncalves
-        jspc.setCompilerSourceVM("1.5"); 
+        jspc.setCompilerSourceVM("1.5");
         jspc.setCompilerTargetVM("1.5");
-        
+
         jspc.setWebXmlFragment(webXmlFragment);
         jspc.setUriroot(webAppSourceDirectory);
 
@@ -255,8 +256,13 @@ public class JspcMojo extends AbstractMojo
         jspc.setCompile(true);
         jspc.setSmapSuppressed(suppressSmap);
         jspc.setSmapDumped(!suppressSmap);
-        jspc.setJavaEncoding(javaEncoding);
 
+        if (javaEncoding == null || javaEncoding.length() == 0) {
+            javaEncoding = Charset.defaultCharset().name();
+            }
+        else {
+            jspc.setJavaEncoding(javaEncoding);
+        }
         if (verbose)
         {
             jspc.setVerbose(99);
@@ -378,7 +384,7 @@ public class JspcMojo extends AbstractMojo
                 mergedWebXmlWriter.append("<web-app>\n");
             }
 
-            //put in the generated fragment     
+            //put in the generated fragment
             BufferedReader fragmentWebXmlReader = new BufferedReader(new FileReader(fragmentWebXml));
             IO.copy(fragmentWebXmlReader, mergedWebXmlWriter);
 
@@ -388,7 +394,7 @@ public class JspcMojo extends AbstractMojo
                 if (END_OF_WEBAPP.equals(marker))
                 {
                     mergedWebXmlWriter.println(END_OF_WEBAPP);
-                }                                       
+                }
 
                 // copy in the rest of the original web.xml file
                 IO.copy(webXmlReader, mergedWebXmlWriter);
@@ -399,7 +405,7 @@ public class JspcMojo extends AbstractMojo
             {
                 mergedWebXmlWriter.append("\n</web-app>\n");
             }
-            
+
             mergedWebXmlWriter.close();
             fragmentWebXmlReader.close();
         }
